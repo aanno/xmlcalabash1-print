@@ -157,8 +157,10 @@ task testStep(type: JavaExec) {
   args('-D', '-a', 'src/test/resources/test-pipeline.xpl')
 }
 
-task makeDist(dependsOn: [ build, copyJar, copyLib ]) << {
-  println "Created distribution in build/dist"
+task makeDist(dependsOn: [ build, copyJar, copyLib ]) {
+  doLast {
+    println "Created distribution in build/dist"
+  }
 }
 
 task zipDist(dependsOn: makeDist, type: Zip) {
@@ -167,8 +169,10 @@ task zipDist(dependsOn: makeDist, type: Zip) {
   archiveName 'xmlcalabash1-print-' + distVersion + ".zip"
 }
 
-task dist(dependsOn: zipDist) << {
-  // nop
+task dist(dependsOn: zipDist) {
+  doLast {
+    // nop
+  }
 }
 
 artifacts {
@@ -238,6 +242,7 @@ uploadArchives {
       beforeDeployment { MavenDeployment deployment ->
         signing.signPom(deployment) }
 
+      /*
       repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
         authentication(userName: sonatypeUsername, password: sonatypePassword)
       }
@@ -245,6 +250,7 @@ uploadArchives {
       snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
         authentication(userName: sonatypeUsername, password: sonatypePassword)
       }
+      */
 
       pom.project {
         name 'XML Calabash print support'
