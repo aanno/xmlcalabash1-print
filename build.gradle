@@ -168,7 +168,14 @@ task zipDist(dependsOn: makeDist, type: Zip) {
 }
 
 task dist(dependsOn: zipDist) {
-  // nop
+  doLast {
+    // nop
+  }
+}
+
+artifacts {
+  archives javadocJar
+  archives sourcesJar
 }
 
 signing {
